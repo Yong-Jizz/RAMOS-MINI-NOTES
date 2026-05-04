@@ -10,9 +10,9 @@ export default function Home() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/notes")}
+        onPress={() => router.push("/add")}
       >
-        <Text style={styles.buttonText}>Open Notes</Text>
+        <Text style={styles.buttonText}>Add New Note</Text>
       </TouchableOpacity>
     </View>
   );

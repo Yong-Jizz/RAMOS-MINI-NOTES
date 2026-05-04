@@ -29,5 +29,3 @@ export const updateNoteDB = (id: number, title: string, category: string) => {
     [title, category, id]
   );
 };
-
-export default db;

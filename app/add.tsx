@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
-import { addNoteDB } from "../database/db";
+import { addNoteDB } from "./database/db";
 import { useRouter } from "expo-router";
 
 export default function AddNote() {

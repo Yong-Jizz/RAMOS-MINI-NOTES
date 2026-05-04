@@ -37,12 +37,13 @@ export default function Notes() {
       <FlatList
         data={notes}
         keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 100 }}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.card}
             onPress={() =>
               router.push({
-                pathname: "/detail",
+                pathname: "/detail" as any,
                 params: {
                   id: item.id.toString(),
                   title: item.title,
@@ -57,26 +58,48 @@ export default function Notes() {
         )}
       />
 
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => router.push("/add")}
-      >
-        <Text style={styles.fabText}>＋</Text>
-      </TouchableOpacity>
+      {/* ADD BUTTON ONLY */}
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={() => router.push("/add" as any)}
+        >
+          <Text style={styles.fabText}>＋</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#EEF2FF" },
-  header: { fontSize: 24, fontWeight: "bold", color: "#4F46E5", marginBottom: 10 },
-  card: { backgroundColor: "#fff", padding: 15, borderRadius: 10, marginBottom: 10 },
+
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#4F46E5",
+    marginBottom: 10,
+  },
+
+  card: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+
   title: { fontSize: 18, fontWeight: "600" },
   category: { color: "#666" },
-  fab: {
+
+  bottomContainer: {
     position: "absolute",
-    right: 20,
     bottom: 20,
+    left: 20,
+    right: 20,
+    alignItems: "center",
+  },
+
+  fab: {
     backgroundColor: "#4F46E5",
     width: 60,
     height: 60,
@@ -84,5 +107,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   fabText: { color: "#fff", fontSize: 28 },
 });

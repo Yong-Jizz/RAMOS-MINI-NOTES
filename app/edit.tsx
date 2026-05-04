@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { updateNoteDB } from "../database/db";
+import { updateNoteDB } from "./database/db";
 
 export default function EditNote() {
   const { id, title, category } = useLocalSearchParams<{
