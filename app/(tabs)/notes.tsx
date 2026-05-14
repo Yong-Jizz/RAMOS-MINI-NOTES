@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { getNotes } from "../database/db";
+import { getNotes, deleteNoteDB } from "../database/db";
 
 type Note = {
   id: number;
@@ -52,13 +52,46 @@ export default function Notes() {
               })
             }
           >
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.category}>{item.category}</Text>
+            <View style={styles.noteRow}>
+              <View>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.category}>{item.category}</Text>
+              </View>
+
+              {/* RIGHT SIDE BUTTONS */}
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/edit" as any,
+                      params: {
+                        id: item.id.toString(),
+                        title: item.title,
+                        category: item.category,
+                      },
+                    })
+                  }
+                >
+                  <Text style={styles.buttonText}>Edit</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={() => {
+                    deleteNoteDB(item.id);
+                    loadNotes();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Delete</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </TouchableOpacity>
         )}
       />
 
-      {/* ADD BUTTON ONLY */}
+      {/* ADD BUTTON */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           style={styles.fab}
@@ -88,8 +121,45 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  title: { fontSize: 18, fontWeight: "600" },
-  category: { color: "#666" },
+  noteRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  title: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  category: {
+    color: "#666",
+  },
+
+  buttonContainer: {
+    flexDirection: "row",
+    gap: 8,
+  },
+
+  editButton: {
+    backgroundColor: "#3B82F6",
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+  },
+
+  deleteButton: {
+    backgroundColor: "#EF4444",
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
+  },
 
   bottomContainer: {
     position: "absolute",
@@ -108,5 +178,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  fabText: { color: "#fff", fontSize: 28 },
+  fabText: {
+    color: "#fff",
+    fontSize: 28,
+  },
 });

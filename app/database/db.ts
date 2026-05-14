@@ -23,9 +23,17 @@ export const addNoteDB = (title: string, category: string) => {
   );
 };
 
-export const updateNoteDB = (id: number, title: string, category: string) => {
+export const updateNoteDB = (
+  id: number,
+  title: string,
+  category: string
+) => {
   db.runSync(
     "UPDATE notes SET title = ?, category = ? WHERE id = ?;",
     [title, category, id]
   );
+};
+
+export const deleteNoteDB = (id: number) => {
+  db.runSync("DELETE FROM notes WHERE id = ?;", [id]);
 };
